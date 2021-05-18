@@ -83,8 +83,8 @@ public class Topic_08_Alert {
 		Assert.assertEquals(alert.getText(), "I am a JS prompt");
 		
 		// Accept Alert
-		alert.accept();
 		alert.sendKeys(alertValue);
+		alert.accept();
 		sleepInSecond(3);
 		
 		Assert.assertEquals(driver.findElement(resultValue).getText(), "You entered: "+ alertValue);
