@@ -1,5 +1,7 @@
 package webdrive;
 
+import static org.testng.Assert.assertTrue;
+
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -16,12 +18,15 @@ public class Topic_09_UserInteractions_Part_I {
 	WebDriver driver;
 	Actions action;
 
+	String projectPath = System.getProperty("user.dir");
 	@BeforeClass
 	public void beforeClass() {
-		System.set
-		driver = new FirefoxDriver();
+
 		// Gan driver vao moi dung dc cho thu vien
+		System.getProperty("webdriver.gecko.driver", projectPath + "\\browserDrivers\\geckodriver.exe");
+		driver = new FirefoxDriver();
 		action = new Actions(driver);
+		
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 
@@ -33,7 +38,7 @@ public class Topic_09_UserInteractions_Part_I {
 		sleepInSecond(3);
 		
 		// We ask for your age only for statistical purposes.
-		Assert.assertEquals(driver.findElement(By.cssSelector(".ui")), "We ask for your age only for statistical purposes.");
+		Assert.assertEquals(driver.findElement(By.cssSelector(".ui-tooltip-content")).getText(), "We ask for your age only for statistical purposes.");
 	}
 	
 	@Test
@@ -41,11 +46,14 @@ public class Topic_09_UserInteractions_Part_I {
 		driver.get("https://www.myntra.com/");
 		
 		action.moveToElement(driver.findElement(By.xpath("//a[@class='desktop-main' and text()='Kids']"))).perform();
-		sleepInSecond(3);	
+		sleepInSecond(3);
+		
+		// Action click
+		action.click(driver.findElement(By.xpath("//a[@class='desktop-categoryName' and text()='Home & Bath']"))).perform();
+	
+		Assert.assertTrue(driver.findElement(By.xpath("//span[@class='breadcrumbs-crumb' and text()='Kids Home Bath']")).isDisplayed());	
 	}
 	
-
-	@Test
 	public void TC_02_Click_And_Hold_1() {
 		driver.get("https://jqueryui.com/resources/demos/selectable/display-grid.html");
 		
@@ -65,12 +73,14 @@ public class Topic_09_UserInteractions_Part_I {
 		Assert.Assert			
 	}
 
-	@Test
+	
 	public void TC_02_Click_And_Hold_2() {
 		
 		driver.get("https://jqueryui.com/resources/demos/selectable/display-grid.html");
 		
 		List<WebElement> rectangles = driver.findElement(By.cssSelector(".ui-selectee"));
+		
+		// Chay dc voi nhieu trinh duyet
 		
 		// Lay ra duoc 12 cai element
 		// Get click hay gi do de tro thanh element
